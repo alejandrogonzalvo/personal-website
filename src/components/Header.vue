@@ -1,11 +1,15 @@
 <template id="header">
   <header>
-    <a href="https://github.com/alejandrogonzalvo">
+    <a href="https://github.com/alejandrogonzalvo" class="logo">
       <img src="@/assets/github.svg" alt="github"/>
+    </a>
+
+    <a href="https://github.com/alejandrogonzalvo" class="logo">
+      <img src="@/assets/youtube.svg" alt="youtube"/>
     </a>
     <nav>
       <ul>
-        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/" class="router-link" >Home</router-link></li>
       </ul>
     </nav>
   </header>
@@ -21,6 +25,7 @@ header {
   display: flex;
   border-bottom: 1px solid #ccc;
   padding: .5rem 1rem;
+  background-color: Azure;
 
 }
 
@@ -42,9 +47,13 @@ nav ul li {
   margin-left: 1rem;
 }
 
-img {
+.router-link {
+  text-decoration: none;
+}
+
+.logo {
   display: inline-block;
   vertical-align: baseline;
-  margin-bottom: -2px;
+  margin: 0 8px 0 0;
 }
 </style>

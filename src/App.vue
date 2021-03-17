@@ -18,13 +18,16 @@ export default {
 </script>
 
 <style>
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: grey;
-  background-color: white;
+  background-color: AntiqueWhite;
   margin-top: 60px;
 }
 </style>

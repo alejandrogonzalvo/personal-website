@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style scoped>
-footer {
+#footer {
   position: absolute;
   bottom: 0;
   width: 100%;
