@@ -16,31 +16,68 @@ import Header from "../components/Header.astro";
 	<body>
 		<Header />
 		<div class="hero">
-			<h1 id="typewriter"></h1>
+			<h1 id="typewriter-1"></h1>
+			<p id="typewriter-2"></p>
 		</div>
 
 		<script>
 			import Typewriter from "typewriter-effect/dist/core";
 
-			const typewriter = new Typewriter("#typewriter", {
+			const typewriter = new Typewriter("#typewriter-1", {
 				loop: false,
-				delay: 75,
+				delay: 50,
 			});
+
+			const typewriter2 = new Typewriter("#typewriter-2", {
+				loop: false,
+				delay: 25,
+			});
+
+			typewriter2
+				.typeString("Welcome to my personal portfolio.\n")
+				.pauseFor(250)
+				.typeString("You can contact me at alejandrogonhid@gmail.com\n")
+				.pauseFor(250)
+				.typeString("Thank you for visiting!\n")
+				.callFunction(() => {
+					const cursor = document.querySelector(
+						"#typewriter-2 .Typewriter__cursor",
+					);
+					if (cursor) (cursor as HTMLElement).style.display = "none";
+				});
 
 			typewriter
 				.typeString("Greetings,")
-				.pauseFor(1000)
+				.pauseFor(500)
 				.deleteAll()
-				.pauseFor(500)
+				.pauseFor(250)
 				.typeString("Hi! ")
-				.pauseFor(500)
+				.pauseFor(250)
 				.typeString("I'm Alejandro!")
-				.pauseFor(500)
+				.pauseFor(250)
 				.typeString(" :D")
-				.pauseFor(1000)
+				.pauseFor(500)
 				.deleteChars(3)
-				.pauseFor(1500)
-				.typeString(" :)")
+				.pauseFor(500)
+				.typeString(" :")
+				.pauseFor(500)
+				.typeString(")")
+				.pauseFor(500)
+				.callFunction(() => {
+					const cursor1 = document.querySelector(
+						"#typewriter-1 .Typewriter__cursor",
+					);
+					if (cursor1)
+						(cursor1 as HTMLElement).style.display = "none";
+
+					const cursor2 = document.querySelector(
+						"#typewriter-2 .Typewriter__cursor",
+					);
+					if (cursor2)
+						(cursor2 as HTMLElement).style.display = "inline";
+
+					typewriter2.start();
+				})
 				.start();
 		</script>
 	</body>

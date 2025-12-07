@@ -3,6 +3,9 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: var(--color-dark-background);
+    max-width: 80ch;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
 header a {

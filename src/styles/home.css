@@ -1,9 +1,13 @@
 .hero {
-    text-align: center;
-    margin-top: 2rem;
+    text-align: left;
+    margin-top: 5rem;
+    padding-left: 2rem;
 }
 
-#subtitle {
-    opacity: 0;
-    transition: opacity 1s ease-in;
+#typewriter-2 {
+    white-space: pre-wrap;
+}
+
+#typewriter-2 .Typewriter__cursor {
+    display: none;
 }
