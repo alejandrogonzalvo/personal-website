@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
-import Navigation from "../components/Navigation.astro";
+
+import "../styles/home.css";
+import Header from "../components/Header.astro";
 ---
 
 <html lang="en">
@@ -12,8 +14,28 @@ import Navigation from "../components/Navigation.astro";
 		<title>Alejandro Gonzalvo</title>
 	</head>
 	<body>
-		<h1>Alejandro Gonzalvo</h1>
-		<Navigation />
-		<p>Software Engineer</p>
+		<Header />
+		<div class="hero">
+			<h1 id="typewriter"></h1>
+		</div>
+
+		<script>
+			import Typewriter from "typewriter-effect/dist/core";
+
+			const typewriter = new Typewriter("#typewriter", {
+				loop: false,
+				delay: 75,
+			});
+
+			typewriter
+				.typeString("Greetings,")
+				.pauseFor(1000)
+				.deleteAll()
+				.pauseFor(500)
+				.typeString("Hi! ")
+				.pauseFor(500)
+				.typeString("I'm Alejandro!")
+				.start();
+		</script>
 	</body>
 </html>

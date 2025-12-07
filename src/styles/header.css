@@ -1,0 +1,24 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-dark-background);
+}
+
+header a {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out;
+    display: inline-block;
+    padding: 0.5rem;
+}
+
+header a:hover {
+    transform: translateY(-2px);
+}
+
+header a:active {
+    transform: translateY(2px);
+}

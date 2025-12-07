@@ -1,5 +1,13 @@
+:root {
+    --color-text: #452829;
+    --color-background: #F3E8DF;
+    --color-dark-background: #E8D1C5;
+    --color-accent: #57595B;
+}
+
+
 html {
-    background-color: #f1f5f9;
+    background-color: var(--color-background);
     font-family: sans-serif;
 }
 
