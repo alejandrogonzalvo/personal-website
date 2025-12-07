@@ -1,0 +1,100 @@
+---
+interface Props {
+    title: string;
+    top: string;
+    left: string;
+    delay?: string;
+}
+
+const { title, top, left, delay = "0s" } = Astro.props;
+---
+
+<div class="bubble-container" style={{ top, left, animationDelay: delay }}>
+    <div class="bubble">
+        <span class="title">{title}</span>
+        <div class="content">
+            <slot />
+        </div>
+    </div>
+</div>
+
+<style>
+    .bubble-container {
+        position: absolute;
+        z-index: 1;
+        transition: z-index 0s ease 0s;
+        transform: translate(-50%, -50%);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translate(-50%, -50%) translateY(0px);
+        }
+        50% {
+            transform: translate(-50%, -50%) translateY(-20px);
+        }
+        100% {
+            transform: translate(-50%, -50%) translateY(0px);
+        }
+    }
+
+    .bubble-container:hover {
+        z-index: 100;
+    }
+
+    .bubble {
+        width: 150px;
+        height: 150px;
+        background-color: var(--color-dark-background);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .title {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: var(--color-text);
+        transition: opacity 0.3s ease;
+    }
+
+    .content {
+        display: none;
+        opacity: 0;
+        color: var(--color-text);
+        font-size: 1rem;
+        line-height: 1.5;
+        text-align: left;
+        transition: opacity 0.3s ease 0.1s;
+    }
+
+    .bubble:hover {
+        width: 400px;
+        height: auto;
+        min-height: 200px;
+        border-radius: 2rem;
+        background-color: var(--color-dark-background);
+        border: 2px solid var(--color-dark-background);
+    }
+
+    .bubble:hover .title {
+        display: none;
+    }
+
+    .bubble:hover .content {
+        display: block;
+        opacity: 1;
+    }
+
+    .content :global(p) {
+        margin: 0;
+    }
+</style>

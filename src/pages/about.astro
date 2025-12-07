@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
-import Navigation from "../components/Navigation.astro";
-import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Bubble from "../components/Bubble.astro";
 const pageTitle = "About Me";
 ---
 
@@ -15,17 +15,43 @@ const pageTitle = "About Me";
     </head>
     <body>
         <div class="container">
-            <Navigation />
+            <Header />
             <h1>{pageTitle}</h1>
-            <p>
-                Full-stack software engineer with 18 months at CERN, where I
-                developed data analysis tools in Python, web applications in
-                React and CI/CD testing pipelines. Collaborated with research
-                group where I developed data visualization tools using FastAPI
-                and Three.js amongst others. I am highly passionate, curious and
-                creative.
-            </p>
+            <div class="bubbles-wrapper">
+                <Bubble title="Experience" top="20%" left="20%" delay="0s">
+                    <p>
+                        Full-stack software engineer with 18 months at CERN,
+                        where I developed data analysis tools in Python, web
+                        applications in React and CI/CD testing pipelines.
+                    </p>
+                </Bubble>
+
+                <Bubble
+                    title="Favourite Animes"
+                    top="30%"
+                    left="60%"
+                    delay="2s"
+                >
+                    <p>Mob Psycho 100</p>
+                    <p>Frieren</p>
+                    <p>Vinland Saga</p>
+                    <p>Hajime no Ippo</p>
+                    <p>Inazuma Eleven</p>
+                </Bubble>
+
+                <Bubble title="Soft Skills" top="60%" left="35%" delay="4s">
+                    <p>I am highly passionate, curious and creative.</p>
+                </Bubble>
+            </div>
         </div>
     </body>
-    <Footer />
 </html>
+
+<style>
+    .bubbles-wrapper {
+        position: relative;
+        height: 600px;
+        width: 100%;
+        margin-top: 2rem;
+    }
+</style>
