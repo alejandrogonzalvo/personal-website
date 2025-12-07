@@ -1,0 +1,28 @@
+---
+import "../styles/global.css";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+const pageTitle = "About Me";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{pageTitle}</title>
+    </head>
+    <body>
+        <Navigation />
+        <h1>{pageTitle}</h1>
+        <p>
+            Full-stack software engineer with 18 months at CERN, where I
+            developed data analysis tools in Python, web applications in React
+            and CI/CD testing pipelines. Collaborated with research group where
+            I developed data visualization tools using FastAPI and Three.js
+            amongst others. I am highly passionate, curious and creative.
+        </p>
+    </body>
+    <Footer />
+</html>
