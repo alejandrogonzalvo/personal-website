@@ -4,8 +4,10 @@ header {
     align-items: center;
     background-color: var(--color-dark-background);
     max-width: 80ch;
-    margin: 0 auto;
-    padding: 1rem;
+    margin: 1rem auto;
+    padding: 0rem 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 header a {
