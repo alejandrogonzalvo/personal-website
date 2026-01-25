@@ -1,0 +1,98 @@
+---
+import Section from './Section.astro';
+
+const experience = [
+  {
+    company: "CERN",
+    role: "Software Developer",
+    date: "Oct 2025 – Present",
+    location: "Valencia, Spain (Remote)",
+    description: "Developing a Python application to migrate 800+ custom websites while preserving layout and styling through pattern recognition."
+  },
+  {
+    company: "CERN",
+    role: "Software Developer Internship",
+    date: "July 2024 – Sep 2025",
+    location: "Geneva, Switzerland",
+    description: "Implemented CI/CD pipelines reducing feature process time by 90%. Developed automated E2E and accessibility tests. Built a multi-threaded link checker scanning 140,000 URLs."
+  },
+  {
+    company: "Polytechnic University of Valencia",
+    role: "Full-Stack Developer",
+    date: "Sep 2023 – July 2024",
+    location: "Valencia, Spain",
+    description: "Developed 'Quvis', a quantum circuit visualizer supporting 10,000 qubits using React and Three.js. Benchmarked quantum network compilers."
+  },
+  {
+    company: "European Hyperloop Week",
+    role: "Executive Director & Technical Lead",
+    date: "Sep 2023 – May 2025",
+    location: "Remote",
+    description: "Led a 50+ member organization. Managed event organization and jury recruitment using Agile methodologies."
+  }
+];
+---
+
+<Section class="experience">
+  <h2>Experience</h2>
+  <div class="timeline">
+    {experience.map(item => (
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <h3>{item.role} <span class="company">@ {item.company}</span></h3>
+          <span class="date">{item.date}</span>
+        </div>
+        <p>{item.description}</p>
+      </div>
+    ))}
+  </div>
+</Section>
+
+<style>
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  .timeline {
+    border-left: 2px solid var(--surface-color);
+    padding-left: 2rem;
+    margin-left: 0.5rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem; /* Adjust based on border and dot size */
+    top: 0.5rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--accent-color);
+    border-radius: 50%;
+  }
+  .timeline-header {
+    margin-bottom: 0.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  .company {
+    color: var(--accent-color);
+    font-weight: 400;
+  }
+  .date {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+  }
+  p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>

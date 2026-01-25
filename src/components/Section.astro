@@ -1,0 +1,15 @@
+---
+const { class: className } = Astro.props;
+---
+
+<section class:list={["fade-in-section", className]}>
+	<slot />
+</section>
+
+<style>
+	section {
+		padding: 4rem 1.5rem;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+</style>

@@ -1,0 +1,104 @@
+Alejandro Gonzalvo Hidalgo
+Ingeniero de Software
+alejandrogonhid@gmail.com — +34 634 195 616 — LinkedIn — GitHub
+
+Información Personal
+Fecha de Nacimiento: 03.09.2003
+Nacionalidad: Española
+Localización: Valencia, España
+
+
+Resumen Profesional
+Ingeniero de software full-stack con 18 meses de experiencia en CERN. Colaboré con un grupo de investigación
+en computación cuántica como asistente de investigación, donde desarrollé herramientas de visualización de
+datos y un compilador cuántico para arquitecturas distribuidas; culminando con investigación publicada.
+
+
+Experiencia Profesional
+
+  CERN                                                                                         Valencia, España (Remoto)
+  Desarrollador de Software                                                                          Oct. 2025 – Actualidad
+     •   Desarrollando una herramienta en Python para migrar más de 800 sitios web mediante reconocimiento de patrones.
+
+  CERN                                                                                                       Ginebra, Suiza
+  Desarrollador de Software Junior                                                                    Julio 2024 – Sep. 2025
+     •   Implementé una pipeline CI/CD para automatizar testing, release y deployment, reduciendo el tiempo de desarrollo
+         de funcionalidades en un 90%.
+     •   Desarrollé tests automatizados end-to-end y de accesibilidad (WCAG AA) usando Playwright (TypeScript).
+     •   Implementé un escaner de webs multi-hilo que escanea 20 URLs/segundo, analizando con éxito 140.000 URLs.
+     •   Desarrollé un tema de WordPress responsive con React y PHP para dar soporte a más de 10.000 usuarios.
+
+  Universidad Politécnica de Valencia                                                                    Valencia, España
+  Desarrollador Full-Stack                                                                            Sep. 2023 – Julio 2024
+     •   Desarrollé un visualizador de circuitos cuánticos usando React y Three.js con soporte hasta 10.000 qubits.
+     •   Desarrollé un compilador de redes cuánticas distribuidas en Python y C++, realizando benchmarks de algoritmos
+         de compilación para optimización de rendimiento (ver arXiv:2407.17306v1).
+
+
+Educación
+
+  Universidad Politécnica de Valencia (UPV), ETSINF                                                      Valencia, España
+  Grado en Ingenierı́a Informática (240 ECTS), Nota Media 7.1/10                                     Sep. 2021 – Jun. 2025
+
+
+Idiomas
+Español: Nativo                Inglés: C2 MCER                 Catalán: Nativo               Francés: A2 (Aprendiendo)
+
+
+Publicaciones
+  Route-Forcing: Scalable Quantum Circuit Mapping for Scalable Quantum Computing Architectures
+  Aceptado en IEEE QCE 2024 | arXiv:2407.17306v1
+Asociaciones Estudiantiles
+
+ European Hyperloop Week | hyperloopweek.com                                                               Europa (Remoto)
+ Director Ejecutivo y Lı́der Técnico                                                                  Sep. 2023 – Mayo 2025
+    •   Lideré una organización de más de 50 miembros, gestionando la organización del evento y reclutamiento del jurado
+        usando metodologı́as Agile.
+    •   Definı́ la hoja de ruta a largo plazo equilibrando objetivos de patrocinadores y participantes, y establecı́ rúbricas de
+        evaluación.
+
+ Hyperloop UPV | hyperloopupv.com                                                                           Valencia, España
+ Ingeniero de Software Embebido                                                                         Sep. 2022 – Ago. 2023
+    •   Desarrollé una capa de abstracción de Hardware type-safe y zero-overhead en C++20 para periféricos STM32H7.
+    •   Construı́ firmware de monitorización de baterı́a en tiempo real gestionando 72 celdas Li-Po con seguimiento de
+        temperatura y voltaje por celda para sistema de alto voltaje de 220V.
+    •   Desarrollé algoritmo de carga para cargadores personalizados, permitiendo carga a bordo y eliminando requisitos de
+        extracción.
+
+
+
+Certificaciones
+
+ Cambridge English C2 Proficiency                                                                      Calificación: 213/230
+
+ AWS Certified Cloud Practitioner                                                                    Válido hasta Oct. 2028
+
+
+
+Proyectos Personales
+ Análisis de Movimiento Humano con Edge AI | Python3, Edge AI, Deep Learning           Ene. 2024 – Jun. 2024
+   • Desarrollé un sistema Edge AI usando NVIDIA Jetson y Python3 para seguimiento de movimiento humano en
+
+      tiempo real.
+    •   Implementé una gamificación donde los usuarios replican movimientos rastreados con un sistema de puntuación
+        para evaluar precisión.
+    •   Apliqué el sistema al análisis deportivo, mejorando técnicas (ej. saque de tenis) proporcionando feedback
+        accionable.
+
+ Quvis: Framework de Visualización de Circuitos Cuánticos | Python, React, Three.js, Qiskit                           2024
+   • Desarrollé un framework de visualización para el análisis de compilación de circuitos cuánticos en procesadores de
+
+     gran escala.
+    •   Construı́ una API en Python integrando con Qiskit y un visualizador 3D web de alto rendimiento usando Three.js y
+        React.
+    •   Implementé análisis espacio-temporal con timeslicing interactivo y heatmaps basados en datos para cuantificación
+        de overhead de routing.
+
+
+
+ Habilidades Técnicas
+   Lenguajes: Python, TypeScript/JavaScript, C++, PHP, SQL, Shell Scripting (Bash)
+   Frameworks: FastAPI, React, Three.js, WordPress, Drupal, HTML5, CSS3
+   DevOps y Cloud: AWS, Docker, CI/CD (GitLab CI), Git, Administración de Sistemas Linux, Automatización
+   Testing y Metodologı́as: End-to-End Testing (Playwright), Unit Testing, TDD, Accesibilidad (WCAG), Agile
+

@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactList from '../components/ContactList.jsx';
+---
+
+<Layout title="Contact | Alejandro Gonzalvo">
+	<main>
+		<div class="center-container">
+            <h1 class="fade-in delay-1">Get in Touch</h1>
+            
+            <!-- React Component for Icons -->
+            <div class="fade-in delay-2">
+                <ContactList />
+            </div>
+            
+            <a href="/" class="back-link fade-in delay-3" aria-label="Back to Home">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </a>
+		</div>
+	</main>
+</Layout>
+
+
+
+<style>
+	main {
+		height: 100vh;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+        background: var(--bg-color);
+	}
+    
+    .center-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;    /* Center everything horizontally */
+        width: fit-content;
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 2rem;    /* Reduced spacing */
+        margin-top: 2rem;       /* Push down a bit */
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        text-align: center;     /* Center text */
+    }
+    
+    .back-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.2s;
+        margin-top: 0;          /* Remove extra margin to keep it close */
+        align-self: center;
+        padding: 0.5rem;
+        border-radius: 50%;
+    }
+    /* Animations */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 0.8s ease-out forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+        }
+        .contact-item {
+            font-size: 1rem;
+            padding: 0.25rem;
+        }
+        .contact-list {
+            gap: 0.75rem;       /* Further reduced for mobile */
+            margin-bottom: 1rem; /* Pull arrow closer */
+        }
+        .center-container {
+            align-items: flex-start; /* Keep list left-aligned on mobile? 
+                                        User said "Center" generally. 
+                                        Let's stick to center-container align-items: center for icon+text block?
+                                        But icon+text looks best if start-aligned relative to each other.
+                                        "fit-content" container is centered. 
+                                        Inside it, if we center, the rows might zigzag if lengths vary.
+                                        But we want the block centered. 
+                                        Let's keep items flex-start within the fit-content container.
+                                        Wait, "Center and a bit down get in touch".
+                                        If I center `h1` in `center-container` (which is `fit-content` and holds the list),
+                                        and `center-container` is centered in `main`.
+                                        The list sets the width of `center-container`.
+                                        So `h1` centered means centered relative to the list width. This is correct.
+                                     */
+             align-items: center; /* Enforce centering */
+        }
+        
+        /* Ensure list itself is not centered items if we want icon alignment */
+        /* .contact-list is inside .center-container. 
+           .contact-list has align-items: flex-start. 
+           So rows align left relative to the list block.
+           The list block is inside `center-container`.
+           If `center-container` aligns center, the list block is centered.
+           This works. */
+    }
+    
+    @media (max-height: 700px) {
+        h1 { margin-bottom: 1rem; margin-top: 1rem; }
+        .contact-list { margin-bottom: 1rem; gap: 0.5rem; }
+    }
+</style>

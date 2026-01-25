@@ -1,0 +1,106 @@
+Alejandro Gonzalvo Hidalgo
+Backend Engineer
+alejandrogonhid@gmail.com — +34 634 195 616 — LinkedIn — GitHub
+
+Personal Information
+Date of Birth: 03.09.2003
+Nationality: Spanish
+Location: Valencia, Spain (willing to relocate)
+EU Citizen – Eligible to work in Switzerland without sponsorship.
+
+
+
+Professional Summary
+Backend engineer with 18 months at CERN, where I developed data analysis tools in Python, web applications
+in React and CI/CD testing pipelines. Experienced in AWS and Docker. Built my own database engine using
+Rust. Looking for a team where I can push myself, ship excellent work, and help my colleagues grow.
+
+
+Professional Experience
+
+  CERN                                                                                       Valencia, Spain (Remote)
+  Software Developer                                                                                   Oct. 2025 – Now
+     •   Developing a Python application to migrate 800+ custom websites while preserving layout and styling through
+         pattern recognition across distributed JSON and HTML data.
+
+  CERN                                                                                            Geneva, Switzerland
+  Software Developer Internship                                                                   July 2024 – Sep. 2025
+     •   Implemented CI/CD pipeline to automate testing, release and deployment, cutting feature process time by 90%.
+     •   Developed automated end-to-end and accessibility tests (WCAG AA) using Playwright (JavaScript/TypeScript).
+     •   Implemented a multi-threaded link checker scanning up to 20 URLs/second, successfully analyzing 140,000 URLs.
+     •   Developed a responsive WordPress theme with React and PHP to support +10,000 users at CERN.
+
+  Polytechnic University of Valencia                                                                    Valencia, Spain
+  Full-Stack Developer                                                                            Sep. 2023 – July 2024
+     •   Developed quantum circuit visualizer using FastAPI, React and Three.js supporting up to 10,000 qubits.
+     •   Developed a distributed quantum network compiler in Python and C++, benchmarking compilation algorithms for
+         performance optimization (see arXiv:2407.17306v1).
+
+
+
+Education
+
+  Polytechnic University of Valencia (UPV), ETSINF                                                      Valencia, Spain
+  B.S. in Computer Engineering (240 ECTS), GPA 7.1/10                                             Sep. 2021 – Jun. 2025
+
+
+Languages
+Spanish: Native                 English: C2 CEFR                  Catalan: Native                French: A2 (Learning)
+Student Associations
+
+ European Hyperloop Week | hyperloopweek.com                                                            Europe (Remote)
+ Executive Director & Technical Lead                                                                Sep. 2023 – May 2025
+    •   Led a 50+ member organization, managing event organization and jury recruitment using Agile methodologies.
+    •   Defined long-term roadmap balancing sponsor and participant goals and established award rubrics.
+
+ Hyperloop UPV | hyperloopupv.com                                                                         Valencia, Spain
+ Embedded Software Engineer                                                                         Sep. 2022 – Aug. 2023
+    •   Developed type-safe, zero-overhead C++20 Hardware Abstraction Layer for STM32H7 peripherals.
+    •   Built real-time battery monitoring firmware managing 72 Li-Po cells with per-cell temperature and voltage tracking
+        for 220V high-voltage system.
+    •   Developed charging algorithm for custom-made chargers, enabling on-board charging and eliminating extraction
+        requirements.
+
+
+
+Certificates
+
+ Cambridge English C2 Proficiency                                                                        Grade: 213/230
+
+ AWS Certified Cloud Practitioner                                                                  Valid until Oct. 2028
+
+
+
+Personal Projects
+ JanQL | Rust, Database Internals, High-Performance I/O                                                  Dec 2025
+    • Developed a persistent Key-Value store using a Log-Structured Merge (LSM) Tree architecture. Implemented
+
+      MemTable buffering, Write-Ahead Log (WAL), SSTables and customized compaction policies.
+    •   Implemented CI to automatically perform and save benchmarks on every release, which I then plotted so the
+        performance cost of every feature for basic operations can be visualized.
+
+ Edge AI Human Movement Analysis | Python3, Edge AI, Deep Learning, Gaming            Jan. 2024 – June 2024
+   • Developed an Edge AI system using NVIDIA Jetson and Python3 for real-time human movement tracking.
+
+    •   Implemented a gamification where users replicate tracked movements with a score system to evaluate precision.
+    •   Applied the system to sports analysis, improving techniques (e.g., tennis serve) by providing actionable feedback.
+
+ Jam Rivalry | Godot, GDScript, Game Design                                                              May 2020
+   • Co-developed a cooperative puzzle platformer during a 72-hour game jam. Achieved top 20 placement in gameplay
+
+     category, featuring asymmetric mechanics and strategic betrayal dynamics between players. See Jam Rivalry.
+
+
+
+Publications
+ Route-Forcing: Scalable Quantum Circuit Mapping for Scalable Quantum Computing Architectures
+ Accepted to IEEE QCE 2024 | arXiv:2407.17306v1
+
+
+
+Technical Skills
+ Languages: Python, Rust, TypeScript/JavaScript, C++, PHP, SQL, Shell Scripting (Bash)
+ Frameworks: FastAPI, React, Three.js, Pandas
+ DevOps & Cloud: AWS, Docker, CI/CD (GitLab CI), Git, Linux System Administration, Automation
+ Testing & Methodologies: End-to-End Testing (Playwright), Unit Testing, TDD, Accessibility (WCAG), Agile
+
