@@ -32,22 +32,31 @@ const ContactList = () => {
     ];
 
     return (
-        <div className="contact-list">
+
+        <ul className="contact-list">
             {links.map((link, index) => (
-                <a
-                    key={index}
-                    href={link.href}
-                    target={link.label === "Email" ? "_self" : "_blank"}
-                    rel="noopener noreferrer"
-                    className="contact-item"
-                    aria-label={link.label}
-                >
-                    <span className="icon">{link.icon}</span>
-                    <span className="text">{link.text}</span>
-                </a>
+                <li key={index} className="contact-item-li">
+                    <a
+                        href={link.href}
+                        target={link.label === "Email" ? "_self" : "_blank"}
+                        rel="noopener noreferrer"
+                        className="contact-link"
+                        aria-label={link.label}
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span className="icon-container">
+                            {link.icon}
+                        </span>
+                        <span className="text">{link.text}</span>
+                    </a>
+                </li>
             ))}
-        </div>
+        </ul>
     );
+
 };
 
 export default ContactList;
