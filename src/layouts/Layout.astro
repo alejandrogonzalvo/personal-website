@@ -1,5 +1,5 @@
 ---
-import '@fontsource/inter';
+
 
 interface Props {
 	title: string;
@@ -18,6 +18,11 @@ import Header from '../components/Header.astro';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 	</head>
 	<body>
         <Header />
@@ -33,17 +38,21 @@ import Header from '../components/Header.astro';
 		--text-secondary: #a1a1aa;
 		--accent-color: #3b82f6;
 		
-		--font-family: 'Inter', sans-serif;
+		--font-heading: 'JetBrains Mono', monospace;
+		--font-body: 'Manrope', sans-serif;
 	}
 	*, *::before, *::after {
 		box-sizing: border-box;
 	}
 	html {
-		font-family: var(--font-family);
+		font-family: var(--font-body);
 		background: var(--bg-color);
 		color: var(--text-primary);
 		scroll-behavior: smooth;
 	}
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
+    }
 	body {
 		margin: 0;
 		padding: 0;

@@ -86,13 +86,14 @@
 
   // Start Main Sequence
   nameTw
-      .typeString("Greetings")
-      .pauseFor(500)
+      .typeString("Greeti")
+      .pauseFor(200)
       .deleteAll()
       .pauseFor(200)
       .typeString("Hi")
       .pauseFor(200)
       .typeString(", I'm Alejandro")
+      .pauseFor(200)
       .callFunction(() => {
           // Remove cursor from name after typing
           const cursor = nameEl.querySelector('.Typewriter__cursor');
