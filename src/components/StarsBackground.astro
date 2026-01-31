@@ -28,7 +28,6 @@
   
   // Mouse state
   let mouse = { x: -9999, y: -9999 };
-  const repulsionRadius = 150;
   const repulsionStrength = 2; // Strength of the force
 
   window.addEventListener('mousemove', (e) => {
@@ -49,7 +48,7 @@
     y: number;
     z: number;
     size: number;
-    baseX: number; // Original position for returning (optional, or just let them float)
+    baseX: number; 
     baseY: number; 
     vx: number;
     vy: number;
@@ -63,16 +62,12 @@
       this.vx = 0;
       this.vy = (Math.random() * 0.5 + 0.1) * this.z; // Falling speed based on depth
       this.opacity = Math.random() * 0.5 + 0.3;
-      
-      this.baseX = this.x;
-      this.baseY = this.y;
     }
 
-    update() {
-      // 1. Normal Movement (Scrolling down)
-      this.y -= this.vy; // Move UP to simulate scrolling down, or DOWN? 
-      // Original CSS moved translateY(-2000px) which is moving stars UP.
-      // So let's move them UP.
+    update(repulsors) {
+      // 1. Normal Movement (Scrolling down/up)
+      // Stars move UP to simulate scrolling down
+      this.y -= this.vy; 
       
       // Wrap around
       if (this.y < 0) {
@@ -80,24 +75,33 @@
         this.x = Math.random() * width;
       }
 
-      // 2. Repulsion
-      const dx = this.x - mouse.x;
-      const dy = this.y - mouse.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+      // 2. Repulsion from all sources
+      // We accumulate forces? Or just pick the strongest?
+      // Accumulating forces gives smooth interaction between multiple repulsors
+      
+      let finalDx = 0;
+      let finalDy = 0;
 
-      if (distance < repulsionRadius) {
-        const forceDirectionX = dx / distance;
-        const forceDirectionY = dy / distance;
-        
-        // The closer, the stronger the force
-        const force = (repulsionRadius - distance) / repulsionRadius;
-        
-        const directionX = forceDirectionX * force * repulsionStrength * this.z; // affect closer stars more? or less? usually close stars (higher z) move more
-        const directionY = forceDirectionY * force * repulsionStrength * this.z;
+      repulsors.forEach(repulsor => {
+          const dx = this.x - repulsor.x;
+          const dy = this.y - repulsor.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-        this.x += directionX;
-        this.y += directionY;
-      }
+          if (distance < repulsor.radius) {
+            const forceDirectionX = dx / distance;
+            const forceDirectionY = dy / distance;
+            
+            // The closer, the stronger the force
+            const force = (repulsor.radius - distance) / repulsor.radius;
+            
+            // Add to total displacement
+            finalDx += forceDirectionX * force * repulsor.strength * this.z;
+            finalDy += forceDirectionY * force * repulsor.strength * this.z;
+          }
+      });
+
+      this.x += finalDx;
+      this.y += finalDy;
     }
 
     draw() {
@@ -116,12 +120,61 @@
     }
   }
 
+  // Cache selectors if possible, but list might be dynamic if elements added? 
+  // For this site, fairly static. Querying once is safer for performance, 
+  // but if components lazy load, we might miss them.
+  // We'll query once and if it's empty try again?
+  // Or just queryAll on every frame? It's optimized by browsers usually.
+  // Let's query once and assume static structure for now to save perf.
+  let cardElements = document.querySelectorAll('.hero-card, .project-item');
+  
+  // Re-query occasionally or on intersection?
+  // Let's just do it every frame for robust "moving" references if needed? 
+  // Actually getBoundingClientRect is the heavy part.
+  
   function animate() {
     if (!ctx) return;
     ctx.clearRect(0, 0, width, height);
+
+    // Prepare repulsors list for this frame
+    const repulsors = [];
+    
+    // 1. Mouse
+    if (mouse.x > 0 && mouse.y > 0) {
+        repulsors.push({
+            x: mouse.x,
+            y: mouse.y,
+            radius: 150,
+            strength: repulsionStrength
+        });
+    }
+
+    // 2. Cards
+    // Re-query if list empty (maybe loaded later) ?
+    if (cardElements.length === 0) {
+        cardElements = document.querySelectorAll('.hero-card, .project-item');
+    }
+
+    cardElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        // Check if visible/relevant
+        if (rect.bottom < 0 || rect.top > height || rect.width === 0) return;
+
+        // Use a radius that covers the card nicely
+        // Diagonal / 2 is exact, mostly.
+        // let's use max dimension / 1.5 to have a "force field" around it
+        const radius = Math.max(rect.width, rect.height) / 1.5;
+
+        repulsors.push({
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+            radius: radius,
+            strength: repulsionStrength
+        });
+    });
     
     stars.forEach(star => {
-      star.update();
+      star.update(repulsors);
       star.draw();
     });
 

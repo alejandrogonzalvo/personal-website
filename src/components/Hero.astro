@@ -8,21 +8,23 @@ import StarsBackground from './StarsBackground.astro';
         <source src="/quvis-summary-optimized.mp4" type="video/mp4">
     </video>
 	<div class="content">
-        <!-- Name Typewriter Container -->
-		<h1 id="name-typewriter" class="one-line-title"></h1>
-        
-        <!-- Role Typewriter Container -->
-		<h2 id="role-typewriter"></h2>
-		
-        <!-- Buttons container -->
-		<div class="actions fade-in-buttons">
-            <div class="btn-container">
-			    <a href="/contact" class="btn primary contact-card">
-                    <div class="btn-light"></div>
-                    <span class="btn-text">Contact Me</span>
-                </a>
+        <div class="hero-card">
+            <!-- Name Typewriter Container -->
+            <h1 id="name-typewriter" class="one-line-title"></h1>
+            
+            <!-- Role Typewriter Container -->
+            <h2 id="role-typewriter"></h2>
+            
+            <!-- Buttons container -->
+            <div class="actions fade-in-buttons">
+                <div class="btn-container">
+                    <a href="/contact" class="btn primary contact-card">
+                        <div class="btn-light"></div>
+                        <span class="btn-text">Contact Me</span>
+                    </a>
+                </div>
             </div>
-		</div>
+        </div>
 	</div>
 	
 	<a href="#experience" class="scroll-down fade-in-scroll" id="scroll-hint" aria-label="Scroll down">
@@ -94,6 +96,7 @@ import StarsBackground from './StarsBackground.astro';
   // We need to cast to HTMLElement to access style
   const buttonsInfo = document.querySelectorAll('.fade-in-buttons');
   const heroBg = document.querySelector('.hero-bg');
+  const heroCard = document.querySelector('.hero-card');
 
   // Shared Observer for all Hero elements
   const observer = new IntersectionObserver((entries) => {
@@ -135,6 +138,11 @@ import StarsBackground from './StarsBackground.astro';
       // Handle Background fade-in
       if (heroBg) {
           heroBg.classList.add('visible');
+      }
+
+      // Handle Card Glass Effect Pop
+      if (heroCard) {
+          heroCard.classList.add('visible');
       }
   };
 
@@ -283,6 +291,56 @@ import StarsBackground from './StarsBackground.astro';
       updateCard();
   }
 
+  // Hero Card 3D Effect implementation
+  if (heroCard) {
+      const card = heroCard as HTMLElement;
+      let mouse = { x: 0, y: 0 };
+      let target = { x: 0, y: 0, scale: 1, z: 0 };
+      let current = { cx: 0, cy: 0, scale: 1, z: 0 };
+      let isHovering = false;
+
+      card.addEventListener('mouseenter', () => {
+          isHovering = true;
+      });
+
+      card.addEventListener('mousemove', (e) => {
+          isHovering = true;
+          const rect = card.getBoundingClientRect();
+          target.x = (e.clientX - rect.left) - rect.width / 2;
+          target.y = (e.clientY - rect.top) - rect.height / 2;
+          target.scale = 1.02; // Subtle scale up for the big card
+          target.z = 5;
+      });
+
+      card.addEventListener('mouseleave', () => {
+          isHovering = false;
+          target.x = 0;
+          target.y = 0;
+          target.scale = 1;
+          target.z = 0;
+      });
+
+      const updateHeroCard = () => {
+          // Smooth interpolation
+          current.cx += (target.x - current.cx) * 0.1;
+          current.cy += (target.y - current.cy) * 0.1;
+          current.scale += (target.scale - current.scale) * 0.1;
+
+          // Apply transformations
+          // using inverted Y axis as requested: cy * -0.01 (subtle rotation for large element)
+          card.style.transform = `
+              scale(${current.scale}) 
+              perspective(1000px)
+              rotateX(${current.cy * -0.02}deg) 
+              rotateY(${current.cx * 0.02}deg)
+          `;
+
+          requestAnimationFrame(updateHeroCard);
+      };
+
+      updateHeroCard();
+  }
+
 </script>
 
 <style>
@@ -329,10 +387,36 @@ import StarsBackground from './StarsBackground.astro';
         z-index: 10;
         width: 100%;
         max-width: 1000px;
-        text-align: center; /* Center text */
+        display: flex;
+        justify-content: center;
+        perspective: 1000px; /* Enable 3D perspective */
+    }
+    
+    /* Hero Card (Glass Effect) */
+    .hero-card {
+        padding: 3rem;
+        text-align: center;
         display: flex;
         flex-direction: column;
-        align-items: center; /* Center buttons */
+        align-items: center;
+        background: transparent; /* Initially transparent */
+        backdrop-filter: none;
+        border: 1px solid transparent;
+        border-radius: 16px;
+        /* transform-style: preserve-3d; Removed to fix backdrop-filter */
+        
+        /* Transition specific properties to avoid conflict with JS transform */
+        transition: 
+            background 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+            backdrop-filter 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+            border-color 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+            box-shadow 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .hero-card.visible {
+        background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
     }
 
 	h1 {
@@ -503,6 +587,13 @@ import StarsBackground from './StarsBackground.astro';
         .btn {
             width: 100%;
             text-align: center;
+        }
+        .hero-card {
+            padding: 2rem 1rem;
+            width: 100%;
+        }
+        .content {
+            padding: 0 0.5rem;
         }
     }
 </style>
