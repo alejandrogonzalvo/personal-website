@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	
-	<a href="#experience" class="scroll-down fade-in-buttons" id="scroll-hint" aria-label="Scroll down">
+	<a href="#experience" class="scroll-down fade-in-scroll" id="scroll-hint" aria-label="Scroll down">
 		<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 			<path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
 		</svg>
@@ -75,6 +75,13 @@
       buttonsInfo.forEach(el => {
           observeElement(el);
       });
+      // Handle scroll hit separately
+      const scrollHint = document.getElementById('scroll-hint');
+      if (scrollHint) scrollHint.classList.add('visible');
+
+      // Handle Header fade-in
+      const header = document.querySelector('header');
+      if (header) header.classList.add('visible');
   };
 
   const nameTw = new Typewriter(nameEl, {
@@ -217,6 +224,19 @@
 	}
     
     .fade-in-buttons.visible {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+    
+    .fade-in-scroll {
+		opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        visibility: hidden;
+    }
+    
+    .fade-in-scroll.visible {
         opacity: 1;
         transform: translateY(0);
         visibility: visible;
