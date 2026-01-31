@@ -126,7 +126,7 @@
   // We'll query once and if it's empty try again?
   // Or just queryAll on every frame? It's optimized by browsers usually.
   // Let's query once and assume static structure for now to save perf.
-  let cardElements = document.querySelectorAll('.hero-card, .project-item');
+  let cardElements = document.querySelectorAll('.hero-card, .project-item, .contact-link, .back-link, .center-container h1');
   
   // Re-query occasionally or on intersection?
   // Let's just do it every frame for robust "moving" references if needed? 
@@ -149,10 +149,10 @@
         });
     }
 
-    // 2. Cards
+    // 2. Cards & Elements
     // Re-query if list empty (maybe loaded later) ?
     if (cardElements.length === 0) {
-        cardElements = document.querySelectorAll('.hero-card, .project-item');
+        cardElements = document.querySelectorAll('.hero-card, .project-item, .contact-link, .back-link, .center-container h1');
     }
 
     cardElements.forEach(el => {
