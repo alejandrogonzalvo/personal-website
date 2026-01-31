@@ -86,6 +86,9 @@ import StarsBackground from './StarsBackground.astro';
   import Typewriter from 'typewriter-effect/dist/core';
   import { ANIMATION_ROOT_MARGIN } from '../config';
 
+  // Lock scroll initially
+  document.body.style.overflow = 'hidden';
+
   const nameEl = document.getElementById('name-typewriter');
   const roleEl = document.getElementById('role-typewriter');
   // We need to cast to HTMLElement to access style
@@ -115,6 +118,9 @@ import StarsBackground from './StarsBackground.astro';
   };
 
   const showButtons = () => {
+      // Unlock scroll
+      document.body.style.overflow = 'auto';
+
       buttonsInfo.forEach(el => {
           observeElement(el);
       });
