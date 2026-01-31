@@ -34,14 +34,7 @@ const projects = [
     link: "#",
     image: "https://images.pexels.com/photos/4245826/pexels-photo-4245826.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
   },
-  {
-    title: "Edge AI Movement Analysis",
-    year: "2024",
-    tech: "Python3, NVIDIA Jetson",
-    description: "Real-time human movement tracking system using Edge AI. Applied to sports analysis giving actionable feedback for tennis serves.",
-    link: "#",
-    image: "https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
-  }
+
 ];
 ---
 
@@ -132,7 +125,7 @@ const projects = [
                     scale(${current.scale}) 
                     translate(${current.cx * 0.05}px, ${current.cy * 0.05}px) 
                     translateZ(${current.z}px)
-                    rotateX(${current.cy * 0.05}deg) 
+                    rotateX(${current.cy * -0.05}deg) 
                     rotateY(${current.cx * 0.05}deg)
                 `;
             }
