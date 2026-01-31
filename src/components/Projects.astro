@@ -6,19 +6,22 @@ const projects = [
     title: "JanQL",
     tech: "Rust, Database Internals",
     description: "A persistent Key-Value store using a Log-Structured Merge (LSM) Tree architecture. Features MemTable buffering, Write-Ahead Log, and SSTables.",
-    link: "#" // Placeholder or GitHub link if known
+    link: "#",
+    image: "https://images.pexels.com/photos/4245826/pexels-photo-4245826.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
   },
   {
     title: "Edge AI Movement Analysis",
     tech: "Python3, NVIDIA Jetson",
     description: "Real-time human movement tracking system using Edge AI. Applied to sports analysis giving actionable feedback for tennis serves.",
-    link: "#"
+    link: "#",
+    image: "https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
   },
   {
     title: "Jam Rivalry",
     tech: "Godot, GDScript",
     description: "Cooperative puzzle platformer created in 72h. Achieved top 20 placement in gameplay category. Features asymmetric mechanics.",
-    link: "#"
+    link: "#",
+    image: "https://images.pexels.com/photos/210546/pexels-photo-210546.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
   }
 ];
 ---
@@ -27,15 +30,99 @@ const projects = [
   <h2>Projects</h2>
   <div class="grid">
     {projects.map(project => (
-      <div class="card">
-        <h3>{project.title}</h3>
-        <span class="tech">{project.tech}</span>
-        <p>{project.description}</p>
-        <!-- <a href={project.link}>View Project &rarr;</a> --> 
+      <div class="project-item">
+        <div class="block">
+          <div class="bg" style={`background-image: url(${project.image})`}></div>
+          <div class="blur" style={`background-image: url(${project.image})`}></div>
+          <div class="circleLight"></div>
+          <div class="text">
+            <h3>{project.title}</h3>
+            <span class="tech">{project.tech}</span>
+            <p>{project.description}</p>
+          </div>
+        </div>
       </div>
     ))}
   </div>
 </Section>
+
+<script>
+    const cards = document.querySelectorAll('.project-item');
+
+    cards.forEach(card => {
+        const block = card.querySelector('.block');
+        const circleLight = card.querySelector('.circleLight');
+        
+        // State for this specific card
+        let mouse = { x: 0, y: 0 };
+        // We now track target values and current interpolated values for smooth physics
+        let target = { x: 0, y: 0, scale: 1, z: 0 };
+        let current = { cx: 0, cy: 0, scale: 1, z: 0 };
+        let isHovering = false;
+        let animationFrame;
+
+        // Mouse Move
+        card.addEventListener('mousemove', (e) => {
+            isHovering = true;
+            const rect = card.getBoundingClientRect();
+            // Calculate mouse position relative to card center
+            target.x = (e.clientX - rect.left) - rect.width / 2;
+            target.y = (e.clientY - rect.top) - rect.height / 2;
+            
+            // Set target "pop" state
+            target.scale = 1.08;
+            target.z = 20;
+
+            // Simple diffuse light following cursor
+            if (circleLight) {
+                 const lightX = e.clientX - rect.left;
+                 const lightY = e.clientY - rect.top;
+                 (circleLight as HTMLElement).style.background = `radial-gradient(circle at ${lightX}px ${lightY}px, rgba(255,255,255,0.15), transparent 300px)`;
+                 (circleLight as HTMLElement).style.opacity = '1';
+            }
+        });
+
+        // Mouse Leave
+        card.addEventListener('mouseleave', () => {
+            isHovering = false;
+            // Reset targets to resting state
+            target.x = 0;
+            target.y = 0;
+            target.scale = 1;
+            target.z = 0;
+            
+            if (circleLight) {
+                (circleLight as HTMLElement).style.opacity = '0';
+            }
+        });
+
+        // Animation Loop (per card)
+        const update = () => {
+             // Smoothly interpolate current values towards target
+             // The divider (10) controls the "weight" or slowness of the transition
+            current.cx += (target.x - current.cx) / 10;
+            current.cy += (target.y - current.cy) / 10;
+            current.scale += (target.scale - current.scale) / 10;
+            current.z += (target.z - current.z) / 10;
+
+            if (block) {
+                 // Apply the interpolated values every frame
+                 // This handles both the "hover in" smooth pop and "hover out" smooth reset
+                 (block as HTMLElement).style.transform = `
+                    scale(${current.scale}) 
+                    translate(${current.cx * 0.05}px, ${current.cy * 0.05}px) 
+                    translateZ(${current.z}px)
+                    rotateX(${current.cy * 0.05}deg) 
+                    rotateY(${current.cx * 0.05}deg)
+                `;
+            }
+
+            animationFrame = requestAnimationFrame(update);
+        };
+
+        update();
+    });
+</script>
 
 <style>
   h2 {
@@ -44,35 +131,127 @@ const projects = [
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
   }
-  .card {
-    background: var(--surface-color);
-    padding: 1.5rem;
+
+  /* PROJECT ITEM (Container) */
+  .project-item {
+    position: relative;
+    width: 100%;
+    min-height: 400px; /* Taller for the card effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* overflow: hidden; */ /* Remove overflow to let 3D pop out */
     border-radius: 12px;
-    border: 1px solid transparent;
-    transition: transform 0.2s, border-color 0.2s;
+    box-sizing: border-box;
+    /* transition: 0.5s; Remove transition here, handled by block */
+    /* background: #000; Remove background from container */
+    perspective: 1000px; /* Enable 3D space for children */
   }
-  .card:hover {
-    transform: translateY(-5px);
-    border-color: var(--text-secondary);
+
+  /* BACKGROUND LAYERS */
+  .bg, .blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.05); /* Slight scale to cover edges during tilt */
+    z-index: 0;
+    pointer-events: none; 
+    border-radius: 12px; /* Match radius */
   }
+
+  .bg {
+    opacity: 0.1; /* Dim initially */
+    z-index: 1;
+    transition: opacity 0.5s;
+  }
+  
+  .project-item:hover .bg {
+    opacity: 0.4;
+  }
+
+  .blur {
+    opacity: 0; 
+    filter: blur(5px);
+    z-index: 0;
+  }
+
+  /* BLOCK (Card Body) */
+  .block {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    color: #ffffff;
+    max-width: 350px; 
+    border-radius: 10px;
+    transform-style: preserve-3d;
+    transition: box-shadow 0.2s; 
+    
+    display: flex; /* Ensure centering content */
+    flex-direction: column;
+    justify-content: center;
+    background: transparent; /* BG is now inside */
+    overflow: hidden; 
+  }
+  
+  .project-item:hover .block {
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+  }
+  
+  /* CIRCLE LIGHT */
+  .circleLight {
+    position: absolute;
+    top: 0;
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .project-item:hover .circleLight {
+    opacity: 1;
+  }
+
+  /* TEXT CONTENT */
+  .text {
+      position: relative;
+      z-index: 20; /* Highest priority */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      transform: translateZ(30px); /* Lift text off the card */
+  }
+
   h3 {
     margin: 0 0 0.5rem 0;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    font-weight: 700;
   }
   .tech {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--accent-color);
     font-family: monospace;
     display: block;
     margin-bottom: 1rem;
+    text-shadow: none; /* Keep accent clear */
   }
   p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.5;
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.6;
     margin: 0;
   }
 </style>
