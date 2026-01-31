@@ -1,5 +1,12 @@
+---
+import StarsBackground from './StarsBackground.astro';
+---
+
 <section class="hero-section" id="hero">
-    <div class="hero-bg"></div>
+    <StarsBackground />
+    <video class="hero-bg" autoplay loop muted playsinline>
+        <source src="/quvis-summary-optimized.mp4" type="video/mp4">
+    </video>
 	<div class="content">
         <!-- Name Typewriter Container -->
 		<h1 id="name-typewriter" class="one-line-title"></h1>
@@ -163,6 +170,9 @@
       .deleteAll();
 
 
+
+
+
   // Start Main Sequence
   // 1. Start observing h1 immediately so it appears
   observeElement(nameEl);
@@ -282,6 +292,7 @@
         padding: 0 1rem;
         /* Ensure no margin interference */
         margin: 0;
+        /* Removed radial-gradient per user request */
 	}
     
     .hero-bg {
@@ -290,11 +301,8 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        z-index: 0;
-        background-image: url('/images/jam_rivalry.gif');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        z-index: 1; /* Above stars */
+        object-fit: cover;
         /* Start zoomed in */
         transform: scale(1.25);
         opacity: 0;
@@ -308,6 +316,8 @@
     .hero-bg.visible {
         opacity: 0.3; /* Max opacity - keep text readable */
     }
+
+
     
     .content {
         z-index: 10;
