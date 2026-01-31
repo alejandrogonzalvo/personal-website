@@ -117,72 +117,84 @@
 /* Mobile responsive adjustments - Clean List View */
 @media (max-width: 600px) {
     .contact-list {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
         width: 100%;
-        margin-bottom: 2rem;
-        margin-left: 0;
-        /* Reset desktop shift */
+        max-width: 100%;
+        margin: 0;
+        /* Let parent gap handle spacing */
         padding: 0;
+        padding-inline-start: 0;
+        /* Strict reset */
+        left: 0;
+        right: 0;
     }
 
     .contact-item-li {
         transform: none;
-        width: 100%;
+        width: auto;
+        /* Allow auto width */
+        max-width: none;
         height: auto;
         margin: 0;
+        display: block;
     }
 
     .contact-link {
         display: flex;
+        justify-content: center;
         align-items: center;
-        gap: 1rem;
         padding: 0.5rem;
         text-decoration: none;
         color: var(--text-secondary);
         transition: all 0.2s ease;
     }
 
+    /* Hide the 3D layers */
     .contact-link span:not(.text):not(.icon-container) {
         display: none !important;
     }
 
+    /* Reset icon container */
     .contact-link .icon-container {
         position: static;
         display: flex !important;
-        width: 40px;
-        height: 40px;
+        justify-content: center;
+        align-items: center;
+        width: 48px;
+        /* Slightly larger touch target */
+        height: 48px;
+        min-width: 48px;
         background: transparent !important;
-        color: var(--accent-color);
-        font-size: 1.5rem !important;
+        color: var(--text-secondary);
+        font-size: 2rem !important;
+        /* Larger icon size */
         transform: none !important;
         box-shadow: none !important;
         opacity: 1 !important;
+        transition: color 0.2s ease, transform 0.2s ease;
     }
 
+    /* Hide text styling */
     .contact-link .text {
-        position: static;
-        transform: none;
-        display: block;
-        font-size: 1.25rem;
-        color: currentColor;
-        text-shadow: none;
+        display: none !important;
     }
 
-    .contact-item-li:has(span:not(.text):hover) .text {
-        transform: none;
-        text-shadow: none;
+    /* Hover/Active effects for mobile */
+    .contact-link:active .icon-container,
+    .contact-link:hover .icon-container {
+        color: var(--text-primary);
+        transform: scale(1.1) !important;
+        /* Subtle scale up */
     }
 
+    /* Disable the complex hover effects from desktop */
+    .contact-item-li:has(span:not(.text):hover) .text,
     .contact-item-li:has(span:not(.text):hover) .icon-container {
         transform: none;
+        text-shadow: none;
         background: transparent;
         box-shadow: none;
-    }
-
-    .contact-link:hover {
-        color: var(--text-primary);
-        transform: translateX(10px);
     }
 }
