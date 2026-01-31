@@ -1,4 +1,5 @@
 <section class="hero-section" id="hero">
+    <div class="hero-bg"></div>
 	<div class="content">
         <!-- Name Typewriter Container -->
 		<h1 id="name-typewriter" class="one-line-title"></h1>
@@ -40,6 +41,38 @@
             }
         });
     }
+
+    // Scroll-linked Background Effect
+    const heroBg = document.querySelector('.hero-bg') as HTMLElement;
+    if (heroBg) {
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const heroHeight = window.innerHeight;
+            
+            // Only animate if within relevant scroll range (e.g. 1 viewport height)
+            if (scrollY <= heroHeight) {
+                // Zoom out effect: Start at 1.25, end at 1
+                const scale = 1.25 - (scrollY / heroHeight) * 0.25;
+                
+                // Blur effect: Start at 0, increase with scroll
+                const blur = (scrollY / heroHeight) * 10;
+                
+                // Opacity effect: Fade out as we scroll
+                // Max opacity is 0.3 (defined in CSS .hero-bg.visible)
+                const maxOpacity = 0.3;
+                const fadeProgress = Math.min(1, (scrollY / heroHeight) * 1.5);
+                const opacity = Math.max(0, maxOpacity * (1 - fadeProgress));
+                
+                // If it hasn't faded in yet via the intro animation, don't force it.
+                // We check if it has the 'visible' class which sets opacity: 1 (actually 0.3 in CSS)
+                if (heroBg.classList.contains('visible')) {
+                     heroBg.style.transform = `scale(${Math.max(1, scale)})`;
+                     heroBg.style.filter = `blur(${blur}px)`;
+                     heroBg.style.opacity = `${opacity}`;
+                }
+            }
+        });
+    }
 </script>
 
 <script>
@@ -50,6 +83,7 @@
   const roleEl = document.getElementById('role-typewriter');
   // We need to cast to HTMLElement to access style
   const buttonsInfo = document.querySelectorAll('.fade-in-buttons');
+  const heroBg = document.querySelector('.hero-bg');
 
   // Shared Observer for all Hero elements
   const observer = new IntersectionObserver((entries) => {
@@ -84,6 +118,11 @@
       // Handle Header fade-in
       const header = document.querySelector('header');
       if (header) header.classList.add('visible');
+      
+      // Handle Background fade-in
+      if (heroBg) {
+          heroBg.classList.add('visible');
+      }
   };
 
   const nameTw = new Typewriter(nameEl, {
@@ -136,7 +175,7 @@
       .typeString("Hi")
       .pauseFor(500)
       .typeString(", I'm Alejandro")
-      .pauseFor(200)
+      .pauseFor(500)
       .callFunction(() => {
           // Remove cursor from name after typing
           const cursor = nameEl.querySelector('.Typewriter__cursor');
@@ -244,6 +283,31 @@
         /* Ensure no margin interference */
         margin: 0;
 	}
+    
+    .hero-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        background-image: url('/images/jam_rivalry.gif');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* Start zoomed in */
+        transform: scale(1.25);
+        opacity: 0;
+        /* Transition for fade-in */
+        transition: opacity 2s ease-out;
+        will-change: transform, filter, opacity;
+        filter: blur(0px);
+        pointer-events: none; /* Ensure clicks pass through */
+    }
+    
+    .hero-bg.visible {
+        opacity: 0.3; /* Max opacity - keep text readable */
+    }
     
     .content {
         z-index: 10;
