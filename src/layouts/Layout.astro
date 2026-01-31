@@ -76,9 +76,11 @@ import Header from '../components/Header.astro';
 </style>
 
 <script>
+	import { ANIMATION_ROOT_MARGIN } from '../config';
+
 	const observerOptions = {
 		root: null,
-		rootMargin: '0px 0px -10% 0px',
+		rootMargin: ANIMATION_ROOT_MARGIN,
 		threshold: 0.1
 	};
 

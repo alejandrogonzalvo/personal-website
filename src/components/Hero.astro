@@ -42,14 +42,39 @@
 
 <script>
   import Typewriter from 'typewriter-effect/dist/core';
+  import { ANIMATION_ROOT_MARGIN } from '../config';
 
   const nameEl = document.getElementById('name-typewriter');
   const roleEl = document.getElementById('role-typewriter');
   // We need to cast to HTMLElement to access style
   const buttonsInfo = document.querySelectorAll('.fade-in-buttons');
 
+  // Shared Observer for all Hero elements
+  const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+          } else {
+              entry.target.classList.remove('visible');
+          }
+      });
+  }, {
+      threshold: 0.1,
+      rootMargin: ANIMATION_ROOT_MARGIN
+  });
+
+  const observeElement = (el) => {
+      if (!el) return;
+      observer.observe(el);
+      // If it's already in view (likely), the observer will trigger 'visible'
+      // But for cleaner initial state if JS loads fast:
+      // el.classList.add('visible'); // Let observer handle it to be safe/consistent
+  };
+
   const showButtons = () => {
-      buttonsInfo.forEach(el => el.classList.add('visible'));
+      buttonsInfo.forEach(el => {
+          observeElement(el);
+      });
   };
 
   const nameTw = new Typewriter(nameEl, {
@@ -91,6 +116,9 @@
 
 
   // Start Main Sequence
+  // 1. Start observing h1 immediately so it appears
+  observeElement(nameEl);
+
   nameTw
       .typeString("Greeti")
       .pauseFor(500)
@@ -106,7 +134,8 @@
           if (cursor) cursor.style.display = 'none';
           
           setTimeout(() => {
-              roleEl.style.opacity = '1';
+              // 2. Reveal h2 via observer
+              observeElement(roleEl);
               roleTw.start();
           }, 100);
       })
@@ -147,15 +176,31 @@
 		letter-spacing: -0.02em;
         white-space: nowrap; 
         min-height: 1.1em;
+        
+        /* Animation */
+        opacity: 0;
+        transition: opacity 0.6s ease-out;
+        will-change: opacity;
 	}
+    h1.visible {
+        opacity: 1;
+    }
+    
 	h2 {
 		font-size: 2rem;
 		color: var(--accent-color);
 		font-weight: 600;
 		margin-bottom: 3rem; /* Increased spacing */
 		min-height: 2.5rem;
-        opacity: 0; /* Hidden initially until type starts */
+        
+        /* Animation */
+        opacity: 0; 
+        transition: opacity 0.6s ease-out;
+        will-change: opacity;
 	}
+    h2.visible {
+        opacity: 1;
+    }
 	
 	.actions {
 		display: flex;
