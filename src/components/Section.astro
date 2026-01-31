@@ -1,8 +1,8 @@
 ---
-const { class: className } = Astro.props;
+const { class: className, wide = false, id } = Astro.props;
 ---
 
-<section class:list={["fade-in-section", className]}>
+<section id={id} class:list={["fade-in-section", className, { wide }]}>
 	<slot />
 </section>
 
@@ -12,4 +12,10 @@ const { class: className } = Astro.props;
 		max-width: 800px;
 		margin: 0 auto;
 	}
+
+    section.wide {
+        max-width: 100%;
+        padding: 4rem 2rem; /* slightly more padding on sides for wide */
+    }
 </style>
+
