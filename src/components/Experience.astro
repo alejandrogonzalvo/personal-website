@@ -37,12 +37,22 @@ const professional = [
 const volunteering = [
   {
     company: "European Hyperloop Week",
-    role: "Executive Director & Technical Lead",
-    date: "Sep 2023 – May 2025",
+    role: "Executive Director",
+    date: "July 2024 – May 2025",
     location: "Europe (Remote)",
     points: [
-      "Led a 50+ member organization, managing event organization and jury recruitment using Agile methodologies.",
-      "Defined long-term roadmap balancing sponsor and participant goals and established award rubrics."
+      "Led and managed an international student organization of 50+ members using Agile methodologies.",
+      "Defined long-term strategic roadmap, balancing corporate sponsor interests and student participant goals."
+    ]
+  },
+  {
+    company: "European Hyperloop Week",
+    role: "Technical Lead",
+    date: "Jan. 2023 – July 2024",
+    location: "Europe (Remote)",
+    points: [
+      "Co-organized international event in Zurich, managing jury recruitment, deadlines, and technical feasibility assessments.",
+      "Created and defined criteria for ’Sense & Control’ award, evaluating vehicle software design, communication protocols, and sensor integration."
     ]
   },
   {
@@ -67,11 +77,12 @@ const volunteering = [
     {professional.map(item => (
       <div class="timeline-item">
         <div class="timeline-content">
-              <div class="timeline-header-row">
-                <h3>{item.role}</h3>
-                <span class="date">{item.date}</span>
-              </div>
-              <div class="company">{item.company}</div>
+          <div class="timeline-header">
+            <div class="header-row">
+              <h3>{item.role}</h3>
+              <span class="date">{item.date}</span>
+            </div>
+            <span class="company">{item.company}</span>
           </div>
           <ul class="points">
             {item.points.map(point => (
@@ -88,13 +99,12 @@ const volunteering = [
     {volunteering.map(item => (
       <div class="timeline-item">
         <div class="timeline-content">
-          <!-- Separated Header Structure -->
           <div class="timeline-header">
-              <div class="timeline-header-row">
-                <h3>{item.role}</h3>
-                <span class="date">{item.date}</span>
-              </div>
-              <div class="company">{item.company}</div>
+            <div class="header-row">
+              <h3>{item.role}</h3>
+              <span class="date">{item.date}</span>
+            </div>
+            <span class="company">{item.company}</span>
           </div>
           <ul class="points">
             {item.points.map(point => (
@@ -204,15 +214,17 @@ const volunteering = [
   }
 
   .timeline-header {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
-  
-  .timeline-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
-      flex-wrap: wrap; /* Be nice to mobile */
+
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
   }
 
   h3 {
@@ -224,18 +236,15 @@ const volunteering = [
 
   .company {
     color: var(--accent-color);
-    font-weight: 500;
-    font-size: 1.4rem; /* Slightly smaller than title */
-    margin-top: 0.25rem;
-    display: block;
+    font-weight: 400;
+    font-size: 1.5rem;
   }
 
   .date {
-    display: block;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
-    white-space: nowrap; /* Keep date on one line if possible */
-    font-family: var(--font-mono);
+    white-space: nowrap;
+    margin-left: 1rem;
   }
 
   .points {
@@ -249,9 +258,9 @@ const volunteering = [
     padding-left: 1.5rem;
     margin-bottom: 0.5rem;
     color: var(--text-secondary);
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     line-height: 1.6;
-    text-align: justify; /* Request: Justify content */
+    text-align: justify;
   }
 
   .points li::before {
