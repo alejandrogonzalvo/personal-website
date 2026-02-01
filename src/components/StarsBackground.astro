@@ -24,6 +24,7 @@
   canvas.height = height;
 
   const stars: Star[] = [];
+  const temporaryStars: Star[] = []; // Array for click-generated stars
   const numStars = 150; // Adjust for density
   
   // Mouse state
@@ -33,6 +34,21 @@
   window.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
+  });
+
+  // Click listener for Burst Effect
+  window.addEventListener('mousedown', (e) => {
+      // 1. Exclusion Logic
+      const target = e.target as HTMLElement;
+      const excludeTags = ['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT', 'VIDEO', 'IMG', 'svg', 'path'];
+      const closestInteractive = target.closest('a, button, .hero-card, .project-item, .contact-link, .back-link, #name-typewriter, #role-typewriter');
+      
+      if (closestInteractive || excludeTags.includes(target.tagName)) {
+          return;
+      }
+      
+      // 2. Generate Rising Stars
+      createRisingStars(e.clientX, e.clientY);
   });
 
   window.addEventListener('resize', () => {
@@ -53,10 +69,12 @@
     vx: number;
     vy: number;
     opacity: number;
+    isTemporary: boolean;
 
-    constructor() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
+    constructor(x?: number, y?: number, isTemporary: boolean = false) {
+      this.isTemporary = isTemporary;
+      this.x = x !== undefined ? x : Math.random() * width;
+      this.y = y !== undefined ? y : Math.random() * height;
       this.z = Math.random() * 2 + 0.5; // Depth factor for parallax/size
       this.size = Math.random() * 2;
       this.vx = 0;
@@ -69,16 +87,15 @@
       // Stars move UP to simulate scrolling down
       this.y -= this.vy; 
       
-      // Wrap around
-      if (this.y < 0) {
-        this.y = height;
-        this.x = Math.random() * width;
+      // Wrap around ONLY for permanent stars
+      if (!this.isTemporary) {
+          if (this.y < 0) {
+            this.y = height;
+            this.x = Math.random() * width;
+          }
       }
 
       // 2. Repulsion from all sources
-      // We accumulate forces? Or just pick the strongest?
-      // Accumulating forces gives smooth interaction between multiple repulsors
-      
       let finalDx = 0;
       let finalDy = 0;
 
@@ -91,10 +108,8 @@
             const forceDirectionX = dx / distance;
             const forceDirectionY = dy / distance;
             
-            // The closer, the stronger the force
             const force = (repulsor.radius - distance) / repulsor.radius;
             
-            // Add to total displacement
             finalDx += forceDirectionX * force * repulsor.strength * this.z;
             finalDy += forceDirectionY * force * repulsor.strength * this.z;
           }
@@ -113,6 +128,17 @@
     }
   }
 
+  function createRisingStars(x, y) {
+      const particleCount = 20;
+      const spread = 50; // How wide the initial cluster is
+      
+      for (let i = 0; i < particleCount; i++) {
+          const randomX = x + (Math.random() - 0.5) * spread;
+          const randomY = y + (Math.random() - 0.5) * spread;
+          temporaryStars.push(new Star(randomX, randomY, true));
+      }
+  }
+
   function initStars() {
     stars.length = 0;
     for (let i = 0; i < numStars; i++) {
@@ -120,17 +146,7 @@
     }
   }
 
-  // Cache selectors if possible, but list might be dynamic if elements added? 
-  // For this site, fairly static. Querying once is safer for performance, 
-  // but if components lazy load, we might miss them.
-  // We'll query once and if it's empty try again?
-  // Or just queryAll on every frame? It's optimized by browsers usually.
-  // Let's query once and assume static structure for now to save perf.
   let cardElements = document.querySelectorAll('.hero-card, .project-item, .contact-link, .back-link, .center-container h1');
-  
-  // Re-query occasionally or on intersection?
-  // Let's just do it every frame for robust "moving" references if needed? 
-  // Actually getBoundingClientRect is the heavy part.
   
   function animate() {
     if (!ctx) return;
@@ -150,21 +166,14 @@
     }
 
     // 2. Cards & Elements
-    // Re-query if list empty (maybe loaded later) ?
     if (cardElements.length === 0) {
         cardElements = document.querySelectorAll('.hero-card, .project-item, .contact-link, .back-link, .center-container h1');
     }
 
     cardElements.forEach(el => {
         const rect = el.getBoundingClientRect();
-        // Check if visible/relevant
         if (rect.bottom < 0 || rect.top > height || rect.width === 0) return;
-
-        // Use a radius that covers the card nicely
-        // Diagonal / 2 is exact, mostly.
-        // let's use max dimension / 1.5 to have a "force field" around it
         const radius = Math.max(rect.width, rect.height) / 1.5;
-
         repulsors.push({
             x: rect.left + rect.width / 2,
             y: rect.top + rect.height / 2,
@@ -173,10 +182,23 @@
         });
     });
     
+    // Update & Draw Background Stars
     stars.forEach(star => {
       star.update(repulsors);
       star.draw();
     });
+    
+    // Update & Draw Temporary Stars
+    for (let i = temporaryStars.length - 1; i >= 0; i--) {
+        const star = temporaryStars[i];
+        star.update(repulsors); // They also react to repulsors!
+        star.draw();
+        
+        // Remove if off-screen (top)
+        if (star.y < -10) {
+            temporaryStars.splice(i, 1);
+        }
+    }
 
     requestAnimationFrame(animate);
   }
