@@ -142,7 +142,7 @@ import StarsBackground from './StarsBackground.astro';
 
       // Handle Card Glass Effect Pop
       if (heroCard) {
-          heroCard.classList.add('visible');
+          observeElement(heroCard);
       }
   };
 
@@ -299,6 +299,10 @@ import StarsBackground from './StarsBackground.astro';
       let current = { cx: 0, cy: 0, scale: 1, z: 0 };
       let isHovering = false;
 
+      // Track scroll for parallax
+      let lastScrollY = window.scrollY;
+      window.addEventListener('scroll', () => { lastScrollY = window.scrollY; }, { passive: true });
+
       card.addEventListener('mouseenter', () => {
           isHovering = true;
       });
@@ -326,14 +330,29 @@ import StarsBackground from './StarsBackground.astro';
           current.cy += (target.y - current.cy) * 0.1;
           current.scale += (target.scale - current.scale) * 0.1;
 
+          // Progressive Parallax Calculation
+          // Formula: 0.8 - (scrollY / (k * heroHeight))^2
+          // Exponential drop-off keeps the factor higher (stickier) for longer,
+          // then releases rapidly.
+          const heroHeight = window.innerHeight;
+          const k = 1; // Tunable constant for release speed
+          
+          const ratio = lastScrollY / (k * heroHeight);
+          const parallaxFactor = 0.8 - Math.pow(ratio, 2.5);
+          
+          // Calculate Y translation
+          const scrollTranslation = lastScrollY * parallaxFactor;
+
           // Apply transformations
           // using inverted Y axis as requested: cy * -0.01 (subtle rotation for large element)
           card.style.transform = `
+              translate3d(0, ${scrollTranslation}px, 0)
               scale(${current.scale}) 
               perspective(1000px)
               rotateX(${current.cy * -0.02}deg) 
               rotateY(${current.cx * 0.02}deg)
           `;
+          // card.style.opacity = `${opacity}`; // Removed opacity fade per user request
 
           requestAnimationFrame(updateHeroCard);
       };
@@ -352,10 +371,10 @@ import StarsBackground from './StarsBackground.astro';
 		justify-content: center;
         align-items: center; /* Center horizontally */
 		position: relative;
-        overflow: hidden; 
+        /* overflow: hidden;  REMOVED to prevent clipping of sticky card */
         padding: 0 1rem;
         /* Ensure no margin interference */
-        margin: 0;
+        margin: 0 0 30vh 0;
         /* Removed radial-gradient per user request */
 	}
     
