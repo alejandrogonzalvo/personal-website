@@ -88,8 +88,14 @@ import StarsBackground from './StarsBackground.astro';
   import Typewriter from 'typewriter-effect/dist/core';
   import { ANIMATION_ROOT_MARGIN } from '../config';
 
-  // Lock scroll initially
-  document.body.style.overflow = 'hidden';
+  // Check visit status (sessionStorage persists while tab is open)
+  const hasVisited = sessionStorage.getItem('visited');
+
+  // Lock scroll initially ONLY if first visit
+  if (!hasVisited) {
+      document.body.style.overflow = 'hidden';
+      sessionStorage.setItem('visited', 'true');
+  }
 
   const nameEl = document.getElementById('name-typewriter');
   const roleEl = document.getElementById('role-typewriter');
@@ -163,6 +169,7 @@ import StarsBackground from './StarsBackground.astro';
       .typeString('Software Engineer')
       .callFunction(() => {
           // First string finished. Wait 0.5s then show buttons.
+          // In visited mode this is redundant but harmless as they are already visible
           setTimeout(showButtons, 100);
       })
       .pauseFor(1500)
@@ -191,27 +198,57 @@ import StarsBackground from './StarsBackground.astro';
   // 1. Start observing h1 immediately so it appears
   observeElement(nameEl);
 
-  nameTw
-      .typeString("Greeting")
-      .pauseFor(500)
-      .deleteAll()
-      .pauseFor(200)
-      .typeString("Hi")
-      .pauseFor(500)
-      .typeString(", I'm Alejandro")
-      .pauseFor(500)
-      .callFunction(() => {
-          // Remove cursor from name after typing
-          const cursor = nameEl.querySelector('.Typewriter__cursor');
-          if (cursor) cursor.style.display = 'none';
-          
-          setTimeout(() => {
-              // 2. Reveal h2 via observer
-              observeElement(roleEl);
-              roleTw.start();
-          }, 100);
-      })
-      .start();
+  if (hasVisited) {
+      // VISITED MODE
+      // 1. Show all static elements immediately
+      showButtons();
+
+      // 2. "Welcome back" -> Normal intro
+      nameTw
+        .typeString("Welcome back")
+        .pauseFor(1500)
+        .deleteAll()
+        .pauseFor(200)
+        .typeString("Hi")
+        .pauseFor(500)
+        .typeString(", I'm Alejandro")
+        .pauseFor(500)
+        .callFunction(() => {
+            const cursor = nameEl.querySelector('.Typewriter__cursor');
+            if (cursor) cursor.style.display = 'none';
+            
+            setTimeout(() => {
+                observeElement(roleEl);
+                roleTw.start();
+            }, 100);
+        })
+        .start();
+
+  } else {
+      // FIRST VISIT MODE
+      // Standard delayed sequence with scroll lock
+      nameTw
+        .typeString("Greeting")
+        .pauseFor(500)
+        .deleteAll()
+        .pauseFor(200)
+        .typeString("Hi")
+        .pauseFor(500)
+        .typeString(", I'm Alejandro")
+        .pauseFor(500)
+        .callFunction(() => {
+            // Remove cursor from name after typing
+            const cursor = nameEl.querySelector('.Typewriter__cursor');
+            if (cursor) cursor.style.display = 'none';
+            
+            setTimeout(() => {
+                // 2. Reveal h2 via observer
+                observeElement(roleEl);
+                roleTw.start();
+            }, 100);
+        })
+        .start();
+  }
 
   // Contact Button 3D Effect
   const btnContainer = document.querySelector('.btn-container') as HTMLElement;
