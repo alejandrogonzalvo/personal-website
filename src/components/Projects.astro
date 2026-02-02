@@ -7,16 +7,17 @@ const projects = [
     year: "2025",
     tech: "Rust, Database Internals",
     description: "A persistent Key-Value store using a Log-Structured Merge (LSM) Tree architecture. Features MemTable buffering, Write-Ahead Log, and SSTables.",
-    link: "#",
-    image: "https://images.pexels.com/photos/4245826/pexels-photo-4245826.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    link: "https://github.com/alejandrogonzalvo/janql",
+    image: "/images/janql.jpg"
   },
   {
-    title: "Edge AI Movement Analysis",
+    title: "Quvis",
     year: "2024",
-    tech: "Python3, NVIDIA Jetson",
-    description: "Real-time human movement tracking system using Edge AI. Applied to sports analysis giving actionable feedback for tennis serves.",
-    link: "#",
-    image: "https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"
+    tech: "Python, React, Three.js, Qiskit",
+    description: "Visualization framework for analyzing quantum circuit compilation on large-scale processors. Features a high-performance 3D web visualizer and spatiotemporal analysis with interactive timeslicing.",
+    link: "https://quvis.net/",
+    image: "/quvis-card.png",
+    video: "/quvis-summary-optimized.mp4"
   },
   {
     title: "Jam Rivalry",
@@ -25,16 +26,7 @@ const projects = [
     description: "Cooperative puzzle platformer created in 72h. Achieved top 20 placement in gameplay category. Features asymmetric mechanics.",
     link: "https://monkeysuite.itch.io/jam-rivalry",
     image: "/images/jam_rivalry.gif"
-  },
-  {
-    title: "JanQL",
-    year: "2025",
-    tech: "Rust, Database Internals",
-    description: "A persistent Key-Value store using a Log-Structured Merge (LSM) Tree architecture. Features MemTable buffering, Write-Ahead Log, and SSTables.",
-    link: "#",
-    image: "https://images.pexels.com/photos/4245826/pexels-photo-4245826.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-  },
-
+  }
 ];
 ---
 
@@ -44,8 +36,17 @@ const projects = [
     {projects.map(project => (
       <a href={project.link} class="project-item" target="_blank" rel="noopener noreferrer">
         <div class="block">
-          <div class="bg" style={`background-image: url(${project.image})`}></div>
-          <div class="blur" style={`background-image: url(${project.image})`}></div>
+          {project.video ? (
+            <video class="bg" autoplay loop muted playsinline>
+               <source src={project.video} type="video/mp4" />
+            </video>
+          ) : (
+            <>
+              <div class="bg" style={`background-image: url(${project.image})`}></div>
+              <div class="blur" style={`background-image: url(${project.image})`}></div>
+            </>
+          )}
+          
           <div class="circleLight"></div>
           <div class="text">
             <h3>{project.title}</h3>
@@ -194,6 +195,7 @@ const projects = [
     height: 100%;
     background-size: cover;
     background-position: center;
+    object-fit: cover; /* Ensure video fills the container */
     transform: scale(1.05); /* Slight scale to cover edges during tilt */
     z-index: 0;
     pointer-events: none; 
@@ -263,10 +265,11 @@ const projects = [
       z-index: 20; /* Highest priority */
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start; /* Was center */
       height: 100%;
       text-shadow: 0 2px 4px rgba(0,0,0,0.8);
       transform: translateZ(30px); /* Lift text off the card */
+      padding-top: 3rem; /* Add padding to push text down from top */
   }
 
   h3 {
