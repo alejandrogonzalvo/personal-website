@@ -8,7 +8,8 @@ const projects = [
     tech: "Rust, Database Internals",
     description: "A persistent Key-Value store using a Log-Structured Merge (LSM) Tree architecture. Features MemTable buffering, Write-Ahead Log, and SSTables.",
     link: "https://github.com/alejandrogonzalvo/janql",
-    image: "/images/janql.jpg"
+    image: "/images/janql.jpg",
+    source: "open source"
   },
   {
     title: "Quvis",
@@ -17,7 +18,8 @@ const projects = [
     description: "Visualization framework for analyzing quantum circuit compilation on large-scale processors. Features a high-performance 3D web visualizer and spatiotemporal analysis with interactive timeslicing.",
     link: "https://quvis.net/",
     image: "/quvis-card.png",
-    video: "/quvis-summary-optimized.mp4"
+    video: "/quvis-summary-optimized.mp4",
+    source: "closed source"
   },
   {
     title: "Jam Rivalry",
@@ -25,9 +27,22 @@ const projects = [
     tech: "Godot, GDScript",
     description: "Cooperative puzzle platformer created in 72h. Achieved top 20 placement in gameplay category. Features asymmetric mechanics.",
     link: "https://monkeysuite.itch.io/jam-rivalry",
-    image: "/images/jam_rivalry.gif"
+    image: "/images/jam_rivalry.gif",
+    source: "closed source"
   }
 ];
+
+const getTechColor = (tech) => {
+  const t = tech.toLowerCase().trim();
+  if (t.includes('rust')) return 'orange';
+  if (t.includes('python')) return 'blue';
+  if (t.includes('react')) return 'cyan';
+  if (t.includes('godot')) return 'purple';
+  if (t.includes('database')) return 'green';
+  if (t.includes('three')) return 'white';
+  if (t.includes('qiskit')) return 'purple';
+  return 'gray';
+};
 ---
 
 <Section class="projects" id="projects" wide={true}>
@@ -50,9 +65,24 @@ const projects = [
           <div class="circleLight"></div>
           <div class="text">
             <h3>{project.title}</h3>
-            <span class="year">{project.year}</span>
-            <span class="tech">{project.tech}</span>
+            <div class="meta-row">
+              <span class="year">{project.year}</span>
+              {project.source && (
+                <span class={`badge ${project.source === 'open source' ? 'open' : 'closed'}`}>
+                  {project.source}
+                </span>
+              )}
+            </div>
+            <div class="separator"></div>
             <p>{project.description}</p>
+            <div class="tech-row">
+              {project.tech.split(',').map(t => {
+                const color = getTechColor(t);
+                return (
+                  <span class={`tech-badge ${color}`}>{t.trim()}</span>
+                )
+              })}
+            </div>
           </div>
         </div>
       </a>
@@ -269,7 +299,24 @@ const projects = [
       height: 100%;
       text-shadow: 0 2px 4px rgba(0,0,0,0.8);
       transform: translateZ(30px); /* Lift text off the card */
-      padding-top: 3rem; /* Add padding to push text down from top */
+      padding-top: 1.5rem; /* Reduced from 3rem */
+  }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between; /* Changed from flex-start */
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  
+  .separator {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15); /* Subtle white line */
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   }
 
   h3 {
@@ -278,28 +325,72 @@ const projects = [
     font-weight: 700;
     color: #fff; 
   }
+
+  .badge {
+    font-size: 0.75rem; /* Increased from 0.65rem */
+    padding: 3px 10px;
+    border-radius: 12px;
+    text-transform: lowercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .badge.open {
+    color: #4ade80; /* Greenish */
+    border-color: rgba(74, 222, 128, 0.4);
+    background: rgba(74, 222, 128, 0.2);
+  }
+
+  .badge.closed {
+    color: #fca5a5; /* Reddish/Orange */
+    border-color: rgba(252, 165, 165, 0.4);
+    background: rgba(252, 165, 165, 0.2);
+  }
   
   .year {
-    font-size: 1.1rem; /* Reduced from 1.25rem */
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
+    font-size: 0.9rem; /* Reduced slightly to match badge better */
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9); /* Brighter text */
+    background: rgba(59, 130, 246, 0.3); /* Blue tint, more opaque */
+    padding: 3px 10px;
+    border-radius: 12px;
     margin-left: 0; 
-    margin-bottom: 0.5rem; 
-    align-self: flex-start; 
+    margin-bottom: 0px; 
+    align-self: center; 
     width: fit-content;
+    border: 1px solid rgba(59, 130, 246, 0.4);
   }
   
-  .tech {
-    font-size: 1.1rem; /* Reduced from 1.25rem */
-    color: var(--accent-color);
-    font-family: monospace;
-    display: block;
-    margin-bottom: 1rem;
-    text-shadow: none; 
+  /* Tech Row */
+  .tech-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto; /* Push to bottom */
+    padding-top: 1rem;
   }
+
+  .tech-badge {
+    font-size: 0.8rem; /* Increased from 0.7rem */
+    padding: 3px 10px; /* Slight padding increase */
+    border-radius: 6px;
+    font-family: monospace;
+    border: 1px solid rgba(255,255,255,0.1);
+    /* background: rgba(0,0,0,0.3); Removed default dark bg */
+    color: #ccc;
+    text-transform: lowercase;
+  }
+
+  .tech-badge.orange { color: #fdba74; border-color: rgba(253, 186, 116, 0.3); background: rgba(253, 186, 116, 0.15); }
+  .tech-badge.blue { color: #93c5fd; border-color: rgba(147, 197, 253, 0.3); background: rgba(147, 197, 253, 0.15); }
+  .tech-badge.cyan { color: #67e8f9; border-color: rgba(103, 232, 249, 0.3); background: rgba(103, 232, 249, 0.15); }
+  .tech-badge.purple { color: #d8b4fe; border-color: rgba(216, 180, 254, 0.3); background: rgba(216, 180, 254, 0.15); }
+  .tech-badge.green { color: #86efac; border-color: rgba(134, 239, 172, 0.3); background: rgba(134, 239, 172, 0.15); }
+  .tech-badge.white { color: #f3f4f6; border-color: rgba(243, 244, 246, 0.3); background: rgba(243, 244, 246, 0.15); }
+  .tech-badge.gray { color: #d1d5db; border-color: rgba(209, 213, 219, 0.3); background: rgba(209, 213, 219, 0.15); }
+
   p {
     color: #e0e0e0;
     font-size: 1.1rem; /* Reduced from 1.25rem */
