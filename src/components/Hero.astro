@@ -228,13 +228,9 @@ import StarsBackground from './StarsBackground.astro';
       // FIRST VISIT MODE
       // Standard delayed sequence with scroll lock
       nameTw
-        .typeString("Greeting")
+        .typeString("Hi,")
         .pauseFor(500)
-        .deleteAll()
-        .pauseFor(200)
-        .typeString("Hi")
-        .pauseFor(500)
-        .typeString(", I'm Alejandro")
+        .typeString(" I'm Alejandro")
         .pauseFor(500)
         .callFunction(() => {
             // Remove cursor from name after typing
